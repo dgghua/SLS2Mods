@@ -1168,7 +1168,7 @@ public static class PatchStartTurn
             try
             {
                 Log.Write(">>> DelayedPlayPhaseCheck: calling Hook.AfterSideTurnStart(Player)");
-                await MegaCrit.Sts2.Core.Hooks.Hook.AfterSideTurnStart(cs, CombatSide.Player);
+                await MegaCrit.Sts2.Core.Hooks.Hook.AfterSideTurnStart(cs, CombatSide.Player, cs.GetCreaturesOnSide(CombatSide.Player));
                 Log.Write(">>> DelayedPlayPhaseCheck: Hook.AfterSideTurnStart done");
             }
             catch (Exception ex) { Log.Write($">>> DelayedPlayPhaseCheck: AfterSideTurnStart ERROR: {ex.Message}"); }
@@ -1195,20 +1195,7 @@ public static class PatchStartTurn
             }
             catch (Exception ex) { Log.Write($">>> DelayedPlayPhaseCheck: OrbQueue ERROR: {ex.Message}"); }
 
-            // 3. Hook.BeforePlayPhaseStart
-            try
-            {
-                foreach (var player in cs.Players)
-                {
-                    if (!player.Creature.IsDead)
-                    {
-                        Log.Write(">>> DelayedPlayPhaseCheck: calling Hook.BeforePlayPhaseStart");
-                        await MegaCrit.Sts2.Core.Hooks.Hook.BeforePlayPhaseStart(cs, player);
-                        Log.Write(">>> DelayedPlayPhaseCheck: Hook.BeforePlayPhaseStart done");
-                    }
-                }
-            }
-            catch (Exception ex) { Log.Write($">>> DelayedPlayPhaseCheck: BeforePlayPhaseStart ERROR: {ex.Message}"); }
+            // 3. (Hook.BeforePlayPhaseStart was removed in game v0.107.1 — skipped)
 
             // 4. CheckWinCondition
             try

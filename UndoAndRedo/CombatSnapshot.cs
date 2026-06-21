@@ -533,7 +533,8 @@ public class CombatSnapshot
         }
 
         // Escaped creatures (shallow copy of references)
-        snapshot._escapedCreatures.AddRange(cs.EscapedCreatures);
+        if (EscapedCreaturesProp?.GetValue(cs) is List<Creature> escapedCreatures)
+            snapshot._escapedCreatures.AddRange(escapedCreatures);
 
         // Creature ID allocator
         if (NextCreatureIdField != null)
